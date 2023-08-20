@@ -2,7 +2,7 @@ let dead = document.getElementById("dead");
 let lost = document.getElementById("lost");
 
 
-for(let index = 1; index <= 9; index += 1) {
+for(let index = 1; index <= 9; index++) {
     function getHole(index) {
         let holeclick = document.getElementById(`hole${index}`);
         return holeclick;
@@ -12,9 +12,9 @@ for(let index = 1; index <= 9; index += 1) {
 
     hole.onclick = function() {
         if(hole.className.includes("hole_has-mole") === true) {
-            dead.textContent += 1;
+            dead.textContent++;
         } else {
-            lost.textContent += 1;
+            lost.textContent++;
         }
 
         if(dead.textContent === 10) {
