@@ -15,18 +15,17 @@ form.addEventListener('submit', (e) => {
     e.preventDefault();
 
     const xhr = new XMLHttpRequest();
-    let login = control[0];
-    let password = control[1];
+   
 
-    xhr.open('POST', 'https://students.netoservices.ru/nestjs-backend/auth', login, password);
+    xhr.open('POST', 'https://students.netoservices.ru/nestjs-backend/auth');
 
     const formData = new FormData(form);
-
+    xhr.responseType = 'json';
     xhr.send(formData);
 
     xhr.onload = function() {
         if (String(xhr.status).startsWith(2)) { 
-            let response = JSON.parse(xhr.response);
+            let response = xhr.response;
 
             if (response.success) {
                 signin.classList.remove('signin_active');
