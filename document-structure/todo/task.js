@@ -1,80 +1,26 @@
-const btn = document.getElementById('tasks__add');
-const taskList = document.getElementById('tasks__list');
+const tasksList = document.getElementById("tasks__list");
+const input = document.getElementById("task__input");
+const addButton = document.getElementById("tasks__add");
 
-btn.addEventListener('click', addTask);
+function taskCreator() {
+  tasksList.insertAdjacentHTML(
+    "afterEnd",
+    `<div class="task"><div class="task__title">${input.value}</div><a href="#" class="task__remove">&times;</a></div>`
+  );
 
-function addTask(event) {
+  input.value = "";
 
-    event.preventDefault();
+  const closeBtn = document.querySelector(".task__remove");
 
-    let text = document.getElementById('task__input');
-    if (text.value === '') return;
-
-    const task = `<div class="task">
-                    <div class="task__title">
-                    ${text.value}
-                    </div>
-                    <a href="#" class="task__remove">&times;</a>
-                  </div>`;
-
-    taskList.insertAdjacentHTML('beforeEnd', task);
-
-    localTasks = JSON.parse(localStorage.tasks);
-    localTasks.push(text.value);
-    localStorage.tasks = JSON.stringify(localTasks);
-
-    text.value = '';
-
-    canBeDeleted();
+  closeBtn.addEventListener("click", (event) => {
+    console.log(event);
+    event.target.closest(".task").remove();
+  });
 }
 
-function canBeDeleted() {
-
-    const removeList = document.querySelectorAll('.task__remove');
-
-    for (let item of removeList) {
-        item.addEventListener('click', removeTask);
-    }
-}
-
-function removeTask(event) {
-
-    event.preventDefault();
-    event.target.closest('.task').remove();
-
-    let key = event.target.closest('.task').querySelector('.task__title').textContent.trim();
-
-    for (let item of JSON.parse(localStorage.tasks)) {
-        if (key === item) {
-
-            localTasks = JSON.parse(localStorage.tasks);
-            localTasks.splice(localTasks.indexOf(key), 1);
-            localStorage.tasks = JSON.stringify(localTasks);
-        }
-    }
-
-}
-
-function init() {
-
-    if (!localStorage.tasks) {
-        localStorage.setItem('tasks', '[]');
-        return;
-    } else {
-
-        for (let title of JSON.parse(localStorage.tasks)) {
-
-            const task = `<div class="task">
-                                <div class="task__title">
-                                ${title}
-                                </div>
-                                <a href="#" class="task__remove">&times;</a>
-                              </div>`;
-
-            taskList.insertAdjacentHTML('beforeEnd', task);
-        }
-        canBeDeleted();
-    }
-}
-
-init();
+addButton.addEventListener("click", (event) => {
+  event.preventDefault();
+  if (input.value.trim() !== "") {
+    taskCreator();
+  }
+});

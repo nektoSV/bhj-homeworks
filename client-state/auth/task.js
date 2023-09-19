@@ -24,7 +24,7 @@ form.addEventListener('submit', (e) => {
     xhr.send(formData);
 
     xhr.onload = function() {
-        if (String(xhr.status).startsWith(2)) { 
+       
             let response = xhr.response;
 
             if (response.success) {
@@ -37,9 +37,6 @@ form.addEventListener('submit', (e) => {
                 alert('Неверный логин/пароль');
                 form.reset();
             }
-        } else {
-            alert( 'Ошибка: ' + xhr.status);
             return;
         }
-    }
 });
